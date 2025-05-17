@@ -20,12 +20,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.android4.core.designsystem.component.UrlImage
 import com.example.android4.core.designsystem.theme.OnnaTheme
-import com.example.android4.presentation.detailcourse.model.DetailCourse
+import com.example.android4.presentation.detailcourse.model.DetailCourseModel
 
 @Composable
 fun RecommendCourse(
     index: Int,
-    detailCourse: DetailCourse,
+    detailCourse: DetailCourseModel,
     modifier: Modifier = Modifier
 ) {
     Column(

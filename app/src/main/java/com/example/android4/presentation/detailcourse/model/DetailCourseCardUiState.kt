@@ -5,7 +5,7 @@ data class DetailCourseCardUiState(
     val courseName: String = "",
     val courseDescription: String = "",
     val date: String = "",
-    val courseList: List<DetailCourse> = emptyList()
+    val courseList: List<DetailCourseModel> = emptyList()
 )
 
 data class DetailCourseUiState(
