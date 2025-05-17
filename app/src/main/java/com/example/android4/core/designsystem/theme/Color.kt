@@ -15,6 +15,7 @@ val Gray5 = Color(0xFF8F8F8F)
 val Gray6 = Color(0xFF666666)
 val Gray7 = Color(0xFF383838)
 val Black = Color(0xFF121212)
+val BaseLine = Color(0xFFF7F8F9)
 
 @Immutable
 data class OnnaColors(
@@ -29,6 +30,7 @@ data class OnnaColors(
     val gray6: Color,
     val gray7: Color,
     val black: Color,
+    val baseLine: Color,
 )
 
 val defaultOnnaColors = OnnaColors(
@@ -43,6 +45,7 @@ val defaultOnnaColors = OnnaColors(
     gray6 = Gray6,
     gray7 = Gray7,
     black = Black,
+    baseLine = BaseLine
 )
 
 val LocalOnnaColorsProvider = staticCompositionLocalOf { defaultOnnaColors }
