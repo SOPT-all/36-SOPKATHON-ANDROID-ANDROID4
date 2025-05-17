@@ -1,51 +1,104 @@
 package com.example.android4.presentation.detailcourse
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.android4.data.dto.request.CourseLikeRequestDto
+import com.example.android4.data.service.CuratorService
 import com.example.android4.presentation.detailcourse.model.DetailCourse
-import com.example.android4.presentation.detailcourse.model.DetailCourseState
+import com.example.android4.presentation.detailcourse.model.DetailCourseCardUiState
+import com.example.android4.presentation.detailcourse.model.DetailCourseUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @HiltViewModel
-class DetailCourseViewModel @Inject constructor() : ViewModel() {
-    // TODO: MutableStateFlow로 변경
-    val detailCourseDummy = DetailCourseState(
-        isLike = false,
-        courseName = "연휴 마지막 날\n들리기 좋은 통영 여행코스",
-        courseDescription = "연휴를 마무리하기 좋은 통영의 감각적인 \n" + "공간들을 소개해 드릴게요!",
-        date = "2025.01.02",
-        courseList = listOf<DetailCourse>(
-            DetailCourse(
-                name = "진주 촉석루",
-                address = "남강로 626 (본성동), 진주성 내",
-                description = "미국 CNN에서 한국 방문시 꼭 가봐야 할 곳 50선에 선정된 촉석루는 남강변 벼랑 위에 우아하고 위엄 있게 서있는 우리나라 3대 누각 중 하나로 고려 고종 28년(1241)에 창건하여 8차례에 걸쳐 중수하였다.",
-                imageUrls = listOf(
-                    "https://avatars.githubusercontent.com/u/101113025?v=4",
-                    "https://avatars.githubusercontent.com/u/101113025?v=4"
+class DetailCourseViewModel @Inject constructor(
+    private val curatorService: CuratorService
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(DetailCourseUiState())
+    val uiState: StateFlow<DetailCourseUiState> = _uiState.asStateFlow()
+
+    val courseId = 1L //TODO: 이전 화면에서 넘겨온 courseId 세팅
+
+    init {
+        getDetailCourse()
+    }
+
+    private fun getDetailCourse() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true)
+
+            runCatching {
+                curatorService.getCourseDetail(
+                    courseId = courseId
                 )
-            ),
-            DetailCourse(
-                name = "진주 촉석루",
-                address = "남강로 626 (본성동), 진주성 내",
-                description = "미국 CNN에서 한국 방문시 꼭 가봐야 할 곳 50선에 선정된 촉석루는 남강변 벼랑 위에 우아하고 위엄 있게 서있는 우리나라 3대 누각 중 하나로 고려 고종 28년(1241)에 창건하여 8차례에 걸쳐 중수하였다.",
-                imageUrls = listOf(
-                    "https://avatars.githubusercontent.com/u/101113025?v=4",
-                    "https://avatars.githubusercontent.com/u/101113025?v=4"
+            }.onSuccess { response ->
+                val result = response.data
+                val courseInfo = DetailCourseCardUiState(
+                    courseName = result!!.courseTitle,
+                    courseDescription = "연휴를 마무리하기 좋은 통영의 감각적인 \n" +
+                            "공간들을 소개해 드릴게요!",
+                    date = LocalDateTime.now().basicDateFormatter(),
+                    isLike = false,
+                    courseList = result.spotList.map {
+                        DetailCourse(
+                            name = it.spotName,
+                            address = it.address,
+                            description = it.description,
+                            imageUrls = it.imageUrls
+                        )
+                    }
                 )
-            ),
-            DetailCourse(
-                name = "진주 촉석루",
-                address = "남강로 626 (본성동), 진주성 내",
-                description = "미국 CNN에서 한국 방문시 꼭 가봐야 할 곳 50선에 선정된 촉석루는 남강변 벼랑 위에 우아하고 위엄 있게 서있는 우리나라 3대 누각 중 하나로 고려 고종 28년(1241)에 창건하여 8차례에 걸쳐 중수하였다.",
-                imageUrls = listOf(
-                    "https://avatars.githubusercontent.com/u/101113025?v=4",
-                    "https://avatars.githubusercontent.com/u/101113025?v=4"
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    data = courseInfo
                 )
-            )
-        )
-    )
+            }
+        }
+    }
 
     fun toggleBookmark() {
-        // TODO: 저장 여부 변경
+        val isLike = _uiState.value.data.isLike
+        if (isLike) { // 좋아요 취소
+            viewModelScope.launch {
+                runCatching {
+                    curatorService.deleteCourseLike(
+                        courseId = courseId
+                    )
+                }.onSuccess {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        data = _uiState.value.data.copy(
+                            isLike = !isLike
+                        )
+                    )
+                }
+            }
+        } else { // 좋아요
+            viewModelScope.launch {
+                runCatching {
+                    curatorService.postCourseLike(
+                        CourseLikeRequestDto(courseId = courseId)
+                    )
+                }.onSuccess {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        data = _uiState.value.data.copy(
+                            isLike = !isLike
+                        )
+                    )
+                }
+            }
+        }
     }
 }
+
+fun LocalDateTime.basicDateFormatter(): String {
+    return this.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+}
+
