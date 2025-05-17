@@ -1,6 +1,7 @@
 package com.example.android4.presentation.recommendcourse
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.android4.R
 import com.example.android4.core.designsystem.theme.OnnaTheme
+import com.example.android4.core.util.noRippleClickable
 import com.example.android4.presentation.detailcourse.DetailCourse
 import com.example.android4.presentation.recommendcourse.component.CourseCard
 import com.example.android4.presentation.recommendcourse.component.UserCard
@@ -32,6 +34,7 @@ import com.example.android4.presentation.recommendcourse.component.UserCard
 @Composable
 fun RecommendCourseScreen(
     paddingValues: PaddingValues,
+    onBackClick: () -> Unit,
     onClick: (DetailCourse) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecommendCourseViewModel = hiltViewModel()
@@ -47,6 +50,7 @@ fun RecommendCourseScreen(
         item {
             CourseTopBar(
                 modifier = modifier,
+                onBackClick = onBackClick,
                 curatorName = uiState.curatorNickname
             )
             Spacer(modifier = modifier.height(28.dp))
@@ -88,11 +92,14 @@ fun RecommendCourseScreen(
 @Composable
 private fun CourseTopBar(
     modifier: Modifier,
+    onBackClick: () -> Unit,
     curatorName: String
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(vertical = 10.dp)
+        ,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Icon(
@@ -101,6 +108,9 @@ private fun CourseTopBar(
             modifier = modifier
                 .padding(start = 20.dp)
                 .size(24.dp)
+                .noRippleClickable(
+                    onClick = onBackClick
+                )
         )
 
         Text(
