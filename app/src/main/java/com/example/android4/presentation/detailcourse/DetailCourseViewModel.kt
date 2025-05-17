@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -65,7 +64,22 @@ class DetailCourseViewModel @Inject constructor(
 
     fun toggleBookmark() {
         val isLike = _uiState.value.data.isLike
-        if (!isLike) {
+        if (isLike) { // 좋아요 취소
+            viewModelScope.launch {
+                runCatching {
+                    curatorService.deleteCourseLike(
+                        courseId = courseId
+                    )
+                }.onSuccess {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        data = _uiState.value.data.copy(
+                            isLike = !isLike
+                        )
+                    )
+                }
+            }
+        } else { // 좋아요
             viewModelScope.launch {
                 runCatching {
                     curatorService.postCourseLike(
@@ -78,8 +92,6 @@ class DetailCourseViewModel @Inject constructor(
                             isLike = !isLike
                         )
                     )
-                }.onFailure {
-                    Timber.d("exception: $it")
                 }
             }
         }
