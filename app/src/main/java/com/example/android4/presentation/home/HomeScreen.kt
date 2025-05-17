@@ -17,6 +17,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,7 +81,20 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(23.dp))
 
-        if (uiState.cardList.isNotEmpty()) {
+        if (uiState.isLoading) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator(
+                    color = OnnaTheme.colors.blue,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (uiState.cardList.isNotEmpty()) {
             HorizontalPager(
                 state = pagerState,
                 contentPadding = PaddingValues(horizontal = screenWidth * 0.15f),
@@ -158,6 +172,20 @@ fun HomeScreen(
                             }
                         })
                         .padding(14.dp)
+                )
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "큐레이터 정보가 없습니다.",
+                    style = OnnaTheme.typography.title5b18,
+                    color = OnnaTheme.colors.gray6
                 )
             }
         }
