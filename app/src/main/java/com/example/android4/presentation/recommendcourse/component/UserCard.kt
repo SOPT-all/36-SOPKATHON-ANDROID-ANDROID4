@@ -23,7 +23,7 @@ import com.example.android4.core.designsystem.theme.OnnaTheme
 
 @Composable
 fun UserCard(
-
+    userImage: String,
     modifier: Modifier = Modifier,
     curatorName: String,
     curatorInfo: String
@@ -40,7 +40,7 @@ fun UserCard(
                 .padding(horizontal = 10.dp, vertical = 15.dp)
         ) {
             UrlImage(
-                imageUrl = "https://avatars.githubusercontent.com/u/142514626?v=4",
+                imageUrl = userImage,
                 shape = CircleShape,
                 modifier = Modifier
                     .size(66.dp)
@@ -66,14 +66,4 @@ fun UserCard(
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun UserCardView() {
-    UserCard(
-        curatorName = "김뚝딱",
-        curatorInfo = "큐레이터에 대한 설명 \n" +
-            "경남 지역에서 25년째 살고있는 어쩌구"
-    )
 }

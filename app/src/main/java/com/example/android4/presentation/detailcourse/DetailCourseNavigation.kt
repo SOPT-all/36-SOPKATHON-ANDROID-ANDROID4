@@ -9,9 +9,10 @@ import com.example.android4.core.navigation.Route
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToDetailCourse(
+    courseId: Int,
     navOptions: NavOptions? = null
 ) {
-    navigate(DetailCourse, navOptions)
+    navigate(DetailCourse(courseId), navOptions)
 }
 
 fun NavGraphBuilder.detailCourseNavGraph(
@@ -25,4 +26,6 @@ fun NavGraphBuilder.detailCourseNavGraph(
 }
 
 @Serializable
-data object DetailCourse : Route
+data class DetailCourse(
+    val courseId: Int
+) : Route

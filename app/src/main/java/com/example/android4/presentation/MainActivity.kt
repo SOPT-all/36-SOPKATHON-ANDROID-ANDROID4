@@ -15,11 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
         setContent {
             OnnaTheme {
-                MyPageScreen(paddingValues = PaddingValues(0.dp))
+                MainScreen()
             }
         }
     }

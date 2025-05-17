@@ -17,7 +17,7 @@ fun NavController.navigateToRecommendCourse(
 
 fun NavGraphBuilder.recommendCourseNavGraph(
     paddingValues: PaddingValues,
-    navigateToDetailCourse: () -> Unit
+    navigateToDetailCourse: (Int) -> Unit
 ) {
     composable<RecommendCourse> {
         RecommendCourseScreen(

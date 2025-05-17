@@ -2,6 +2,7 @@ package com.example.android4.data.di
 
 import com.example.android4.data.service.CuratorService
 import com.example.android4.data.service.DummyService
+import com.example.android4.data.service.RecommendCourseService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +22,9 @@ object ServiceModule {
     @Singleton
     fun provideCuratorService(retrofit: Retrofit): CuratorService =
         retrofit.create(CuratorService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRecommendCourseService(retrofit: Retrofit): RecommendCourseService =
+        retrofit.create(RecommendCourseService::class.java)
 }

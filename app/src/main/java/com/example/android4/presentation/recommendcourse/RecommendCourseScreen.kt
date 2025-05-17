@@ -1,5 +1,6 @@
 package com.example.android4.presentation.recommendcourse
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,10 +15,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.android4.R
 import com.example.android4.core.designsystem.theme.OnnaTheme
 import com.example.android4.presentation.recommendcourse.component.CourseCard
@@ -26,17 +31,22 @@ import com.example.android4.presentation.recommendcourse.component.UserCard
 @Composable
 fun RecommendCourseScreen(
     paddingValues: PaddingValues,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: RecommendCourseViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+    
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
+            .background(OnnaTheme.colors.white)
             .padding(paddingValues)
     ) {
         item {
             CourseTopBar(
-                modifier = modifier
+                modifier = modifier,
+                curatorName = uiState.curatorNickname
             )
             Spacer(modifier = modifier.height(28.dp))
         }
@@ -45,40 +55,37 @@ fun RecommendCourseScreen(
             UserCard(
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
-                curatorName = "김뚝딱",
-                curatorInfo = "큐레이터에 대한 설명 \n경남 지역에서 25년째 살고있는 어쩌구"
+                curatorName = uiState.curatorNickname,
+                curatorInfo = uiState.curatorDescription,
+                userImage = uiState.profileImageUrl
             )
         }
 
         item {
-            CourseCard(
-                courseDetail = "코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명",
-                postDay = "2025.01.23",
-                onItemClick = onClick
-            )
-
-            CourseCard(
-                courseDetail = "안녕",
-                postDay = "2025.01.23",
-                onItemClick = onClick
-            )
-
-            CourseCard(
-                courseDetail = "안ㅇㄹ",
-                postDay = "2025.01.23",
-                onItemClick = onClick
-            )
+            uiState.courses.forEach { course ->
+                CourseCard(
+                    courseDetail = course.description,
+                    courseTitle = course.courseTitle,
+                    postDay = course.recordDate,
+                    onItemClick = { onClick(course.courseId) },
+                    imageUrl = course.imageUrls,
+                    isBookmarked = course.isBookmarked,
+                    onBookClick = { viewModel.toggleBookmark(course.courseId) }
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun CourseTopBar(modifier: Modifier) {
+private fun CourseTopBar(
+    modifier: Modifier,
+    curatorName: String
+) {
     Row(
         modifier = modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
-
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_delete_24),
@@ -89,8 +96,7 @@ private fun CourseTopBar(modifier: Modifier) {
         )
 
         Text(
-            // text = "{$curatorName}이 추천하는 코스"
-            text = "김뚝딱이 추천하는 코스",
+            text = "${curatorName}이 추천하는 코스",
             style = OnnaTheme.typography.title1b17,
             color = OnnaTheme.colors.black
         )
