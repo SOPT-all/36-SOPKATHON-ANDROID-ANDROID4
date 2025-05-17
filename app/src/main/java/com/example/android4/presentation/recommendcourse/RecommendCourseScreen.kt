@@ -62,15 +62,20 @@ fun RecommendCourseScreen(
 
             CourseCard(
                 courseDetail = "코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명",
-                postDay = "2025.01.23")
+                postDay = "2025.01.23",
+                onItemClick = onClick
+                )
 
             CourseCard(
                 courseDetail = "안녕",
-                postDay = "2025.01.23")
+                postDay = "2025.01.23",
+                onItemClick = onClick
+                )
 
             CourseCard(
                 courseDetail = "안ㅇㄹ",
-                postDay = "2025.01.23")
+                postDay = "2025.01.23",
+                onItemClick = onClick)
 
         }
 

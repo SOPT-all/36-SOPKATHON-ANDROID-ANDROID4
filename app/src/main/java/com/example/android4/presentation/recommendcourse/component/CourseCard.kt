@@ -1,26 +1,21 @@
 package com.example.android4.presentation.recommendcourse.component
 
-import android.text.Layout
+
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -28,8 +23,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-
 import com.example.android4.R
 import com.example.android4.core.designsystem.component.UrlImage
 import com.example.android4.core.designsystem.theme.OnnaTheme
@@ -39,14 +32,17 @@ import com.example.android4.core.designsystem.theme.OnnaTheme
 fun CourseCard(
     modifier: Modifier = Modifier,
     courseDetail : String,
+    onItemClick: () -> Unit,
     postDay: String
 ) {
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp),
-
+            .padding(20.dp)
+            .clickable(
+                onClick = onItemClick
+            )
     ) {
 
         Row(
@@ -148,5 +144,7 @@ private fun CourseCardPreview() {
 
         modifier = Modifier,
         courseDetail = "코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명",
-        postDay = "2026.01.02")
+        postDay = "2026.01.02",
+        onItemClick = {}
+        )
 }
