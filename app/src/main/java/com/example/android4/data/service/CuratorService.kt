@@ -4,6 +4,7 @@ import com.example.android4.core.network.BaseResponse
 import com.example.android4.data.dto.request.CourseLikeRequestDto
 import com.example.android4.data.dto.response.CourseDetailResponseDto
 import com.example.android4.data.dto.response.CuratorListResponseDto
+import com.example.android4.data.dto.response.MyPageDataDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -28,4 +29,8 @@ interface CuratorService {
     suspend fun deleteCourseLike(
         @Path("courseId") courseId: Long
     ): BaseResponse<CourseLikeRequestDto>
+
+    @GET("/api/users/me")
+    suspend fun getMyPage(
+    ): BaseResponse<MyPageDataDto>
 }
