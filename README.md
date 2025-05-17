@@ -25,6 +25,10 @@
 ### 시연 영상
 
 
+https://github.com/user-attachments/assets/c6157c5c-6e5b-4dea-9fcf-d2c5161ac69c
+
+
+
 
 ## CONTRIBUTORS
 
@@ -78,5 +82,5 @@
 
 | Before | After |
 | --- | --- |
-| ![image](https://github.com/user-attachments/assets/8223622f-d597-4a49-bdc9-e5cb029312d1)
- |  |
+| <img src="https://github.com/user-attachments/assets/8223622f-d597-4a49-bdc9-e5cb029312d1" width="300" height="200" /> | <img src="https://github.com/user-attachments/assets/4289e596-48ab-4221-84ba-12fe7c1d14c9" width="300" height="200" /> |
+
