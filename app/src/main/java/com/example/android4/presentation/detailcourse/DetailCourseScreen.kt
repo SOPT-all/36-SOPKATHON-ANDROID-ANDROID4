@@ -81,7 +81,8 @@ fun DetailCourseScreen(
                     Text(
                         text = uiState.value.data.courseName,
                         style = OnnaTheme.typography.title4b22,
-                        color = OnnaTheme.colors.white
+                        color = OnnaTheme.colors.white,
+                        modifier = Modifier.weight(1f)
                     )
                     Spacer(Modifier.width(10.dp))
                     Icon(
