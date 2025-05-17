@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.example.android4.core.designsystem.theme.OnnaTheme
 import com.example.android4.core.util.noRippleClickable
 import com.example.android4.presentation.main.MainTab
 import kotlinx.collections.immutable.ImmutableList
@@ -44,16 +44,12 @@ fun MainBottomBar(
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(OnnaTheme.colors.white)
         ) {
-            HorizontalDivider(
-                color = Color.LightGray,
-                thickness = 1.dp
-            )
             Row(
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(vertical = 13.dp)
+                    .padding(vertical = 10.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -100,10 +96,11 @@ private fun RowScope.MainBottomBarItem(
         Text(
             text = tab.label,
             color = if (selected) {
-                Color.Black
+                OnnaTheme.colors.blue
             } else {
-                Color.Gray
-            }
+                OnnaTheme.colors.gray3
+            },
+            style = OnnaTheme.typography.body6m13
         )
     }
 }

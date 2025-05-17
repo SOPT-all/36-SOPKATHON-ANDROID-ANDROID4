@@ -30,7 +30,7 @@ data class OnnaColors(
     val gray6: Color,
     val gray7: Color,
     val black: Color,
-    val baseLine: Color,
+    val baseLine: Color
 )
 
 val defaultOnnaColors = OnnaColors(

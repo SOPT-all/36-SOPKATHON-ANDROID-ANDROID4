@@ -32,7 +32,7 @@ import com.example.android4.presentation.recommendcourse.component.UserCard
 fun RecommendCourseScreen(
     paddingValues: PaddingValues,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
 
 
