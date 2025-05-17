@@ -22,8 +22,8 @@ data class OnnaTypography(
     val title1b17: TextStyle,
     val title2sb15: TextStyle,
     val title3b15: TextStyle,
-    val title5b18: TextStyle,
     val title4b22: TextStyle,
+    val title5b18: TextStyle,
     // body
     val body1sb15: TextStyle,
     val body2m15: TextStyle,
@@ -69,14 +69,13 @@ val defaultOnnaTypography = OnnaTypography(
         fontFamily = onnaBold,
         fontSize = 15.sp
     ),
+    title4b22 = OnnaTextStyle(
+        fontFamily = onnaBold,
+        fontSize = 22.sp
+    ),
     title5b18 = OnnaTextStyle(
         fontFamily = onnaBold,
         fontSize = 18.sp
-    ),
-    title4b22 = OnnaTextStyle(
-        fontFamily = onnaBold,
-        fontSize = 22.sp,
-        lineHeight = 1.3.em
     ),
     body1sb15 = OnnaTextStyle(
         fontFamily = onnaSemiBold,
