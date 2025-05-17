@@ -3,8 +3,12 @@ package com.example.android4.presentation.detailcourse
 import androidx.lifecycle.ViewModel
 import com.example.android4.presentation.detailcourse.model.DetailCourse
 import com.example.android4.presentation.detailcourse.model.DetailCourseState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 
-class DetailCourseViewModel: ViewModel() {
+@HiltViewModel
+class DetailCourseViewModel @Inject constructor(): ViewModel() {
+    //TODO: MutableStateFlow로 변경
     val detailCourseDummy = DetailCourseState(
         isLike = false,
         courseName = "연휴 마지막 날\n들리기 좋은 통영 여행코스",

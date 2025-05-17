@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,10 +28,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.android4.R
 import com.example.android4.core.designsystem.theme.Blue
 import com.example.android4.core.designsystem.theme.OnnaTheme
+import com.example.android4.core.util.noRippleClickable
 import com.example.android4.presentation.detailcourse.component.RecommendCourse
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -40,7 +40,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun DetailCourseScreen(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
-    viewModel: DetailCourseViewModel = viewModel()
+    viewModel: DetailCourseViewModel = hiltViewModel()
 ) {
     val systemUiController = rememberSystemUiController()
     val course = viewModel.detailCourseDummy
@@ -83,16 +83,16 @@ fun DetailCourseScreen(
                         color = OnnaTheme.colors.white,
                     )
                     Spacer(Modifier.width(10.dp))
-                    IconButton(
-                        onClick = { },
-                        modifier = Modifier.size(24.dp)
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_bookmark_24),
-                            contentDescription = null,
-                            tint = OnnaTheme.colors.white,
-                        )
-                    }
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_bookmark_24),
+                        contentDescription = null,
+                        tint = OnnaTheme.colors.white,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .noRippleClickable(
+                                onClick = viewModel::toggleBookmark
+                            )
+                    )
                 }
                 Spacer(Modifier.height(18.dp))
                 Text(
