@@ -4,8 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.android4.data.dto.request.CourseLikeRequestDto
 import com.example.android4.data.service.RecommendCourseService
 import com.example.android4.data.dto.response.CourseListDto
+import com.example.android4.data.service.CuratorService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +35,7 @@ data class CourseUiState(
 @HiltViewModel
 class RecommendCourseViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val curatorService: CuratorService,
     private val recommendCourseService: RecommendCourseService
 ): ViewModel() {
 
@@ -77,6 +80,47 @@ class RecommendCourseViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun toggleBookmark(courseId: Int) {
+        val currentCourses = _state.value.courses
+        val courseIndex = currentCourses.indexOfFirst { it.courseId == courseId }
+        
+        if (courseIndex != -1) {
+            val course = currentCourses[courseIndex]
+            val isBookmarked = course.isBookmarked
+            
+            viewModelScope.launch {
+                if (isBookmarked) {
+                    runCatching {
+                        curatorService.deleteCourseLike(courseId = courseId.toLong())
+                    }.onSuccess {
+                        updateBookmarkState(courseId, !isBookmarked)
+                    }
+                } else {
+                    runCatching {
+                        curatorService.postCourseLike(
+                            CourseLikeRequestDto(courseId = courseId.toLong())
+                        )
+                    }.onSuccess {
+                        updateBookmarkState(courseId, !isBookmarked)
+                    }
+                }
+            }
+        }
+    }
+    
+    private fun updateBookmarkState(courseId: Int, isBookmarked: Boolean) {
+        _state.update { currentState ->
+            val updatedCourses = currentState.courses.map { course ->
+                if (course.courseId == courseId) {
+                    course.copy(isBookmarked = isBookmarked)
+                } else {
+                    course
+                }
+            }
+            currentState.copy(courses = updatedCourses)
         }
     }
 }

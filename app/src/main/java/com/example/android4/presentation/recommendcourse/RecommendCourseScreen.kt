@@ -1,5 +1,6 @@
 package com.example.android4.presentation.recommendcourse
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,7 @@ fun RecommendCourseScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
+            .background(OnnaTheme.colors.white)
             .padding(paddingValues)
     ) {
         item {
@@ -54,7 +56,8 @@ fun RecommendCourseScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
                 curatorName = uiState.curatorNickname,
-                curatorInfo = uiState.curatorDescription
+                curatorInfo = uiState.curatorDescription,
+                userImage = uiState.profileImageUrl
             )
         }
 
@@ -62,8 +65,12 @@ fun RecommendCourseScreen(
             uiState.courses.forEach { course ->
                 CourseCard(
                     courseDetail = course.description,
+                    courseTitle = course.courseTitle,
                     postDay = course.recordDate,
-                    onItemClick = { onClick(course.courseId) }
+                    onItemClick = { onClick(course.courseId) },
+                    imageUrl = course.imageUrls,
+                    isBookmarked = course.isBookmarked,
+                    onBookClick = { viewModel.toggleBookmark(course.courseId) }
                 )
             }
         }
