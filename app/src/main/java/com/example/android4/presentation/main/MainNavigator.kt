@@ -9,6 +9,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.example.android4.presentation.detailcourse.DetailCourse
 import com.example.android4.presentation.detailcourse.navigateToDetailCourse
 import com.example.android4.presentation.home.navigateToHome
 import com.example.android4.presentation.landing.navigateToLanding
@@ -91,10 +92,10 @@ class MainNavigator(
     }
 
     fun navigateToDetailCourse(
-        courseId: Int,
+        detailCourse: DetailCourse,
         navOptions: NavOptions? = null
     ) {
-        navController.navigateToDetailCourse(courseId,navOptions)
+        navController.navigateToDetailCourse(detailCourse, navOptions)
     }
 
     fun navigateUp() {

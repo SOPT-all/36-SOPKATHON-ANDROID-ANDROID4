@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.example.android4.core.navigation.Route
+import com.example.android4.presentation.detailcourse.DetailCourse
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToRecommendCourse(
@@ -17,7 +18,7 @@ fun NavController.navigateToRecommendCourse(
 
 fun NavGraphBuilder.recommendCourseNavGraph(
     paddingValues: PaddingValues,
-    navigateToDetailCourse: (Int) -> Unit
+    navigateToDetailCourse: (DetailCourse) -> Unit
 ) {
     composable<RecommendCourse> {
         RecommendCourseScreen(

@@ -25,13 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.android4.R
 import com.example.android4.core.designsystem.theme.OnnaTheme
+import com.example.android4.presentation.detailcourse.DetailCourse
 import com.example.android4.presentation.recommendcourse.component.CourseCard
 import com.example.android4.presentation.recommendcourse.component.UserCard
 
 @Composable
 fun RecommendCourseScreen(
     paddingValues: PaddingValues,
-    onClick: (Int) -> Unit,
+    onClick: (DetailCourse) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecommendCourseViewModel = hiltViewModel()
 ) {
@@ -67,7 +68,14 @@ fun RecommendCourseScreen(
                     courseDetail = course.description,
                     courseTitle = course.courseTitle,
                     postDay = course.recordDate,
-                    onItemClick = { onClick(course.courseId) },
+                    onItemClick = { onClick(
+                        DetailCourse(
+                            courseId = course.courseId,
+                            courseDescription = course.description,
+                            isBookmarked = course.isBookmarked,
+                            recordDate = course.recordDate,
+                        )
+                    ) },
                     imageUrl = course.imageUrls,
                     isBookmarked = course.isBookmarked,
                     onBookClick = { viewModel.toggleBookmark(course.courseId) }
