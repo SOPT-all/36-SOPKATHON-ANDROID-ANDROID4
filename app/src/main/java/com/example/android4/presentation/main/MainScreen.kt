@@ -27,6 +27,7 @@ import com.example.android4.presentation.landing.landingNavGraph
 import com.example.android4.presentation.main.component.MainBottomBar
 import com.example.android4.presentation.mypage.myPageNavGraph
 import com.example.android4.presentation.recommendcourse.recommendCourseNavGraph
+import com.example.android4.presentation.splash.splashNavGraph
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -95,8 +96,11 @@ fun MainScreen(
                 navController = navigator.navController,
                 startDestination = navigator.startDestination
             ) {
+                splashNavGraph(
+                    navigateToLanding = navigator::navigateToLanding
+                )
+
                 landingNavGraph(
-                    paddingValues = paddingValues,
                     navigateToHome = navigator::navigateToHome
                 )
                 homeNavGraph(
