@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 fun RecommendCourseScreen(
     paddingValues: PaddingValues,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
