@@ -5,19 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RecommendResponseDto(
-
     @SerialName("nickname")
     val nickname: String,
-
     @SerialName("description")
     val description: String,
-
-    @SerialName("profileImageUrl1")
-    val profileImageUrl1: String,
-
+    @SerialName("profileImageUrl")
+    val profileImageUrl: String,
     @SerialName("courseList")
     val courseList: List<CourseListDto>
-
 )
 
 @Serializable

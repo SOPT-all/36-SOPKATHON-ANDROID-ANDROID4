@@ -55,9 +55,17 @@ class MainNavigator(
         currentDestination?.hasRoute(it::class) == true
     }
 
-    fun navigateToHome(
-        navOptions: NavOptions? = null
-    ) {
+    fun navigateToHome(){
+        val navOptions = navOptions {
+            navController.currentDestination?.route?.let {
+                popUpTo(it) {
+                    inclusive = true
+                    saveState = true
+                }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
         navController.navigateToHome(navOptions)
     }
 
@@ -83,9 +91,10 @@ class MainNavigator(
     }
 
     fun navigateToDetailCourse(
+        courseId: Int,
         navOptions: NavOptions? = null
     ) {
-        navController.navigateToDetailCourse(navOptions)
+        navController.navigateToDetailCourse(courseId,navOptions)
     }
 
     fun navigateUp() {

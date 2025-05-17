@@ -1,9 +1,11 @@
 package com.example.android4.presentation.recommendcourse
 
-import androidx.compose.runtime.currentComposer
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.android4.data.service.RecommendCourseService
+import com.example.android4.data.dto.response.CourseListDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,65 +14,69 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class RecommendCourse(
-
-    val userId: Int = -1,
-    val nickname: String = "",
-    val curatorDescription: String= "",
-    val courseId: Int =-1,
-    val courseTitle: String="",
-    val isBookmarked: Boolean = false,
-    val courseDescription: String ="",
-    val imageUrls: List<String> = listOf<String>(),
-    val recordDate: String = ""
-
-
-
-
+data class RecommendCourseUiState(
+    val curatorNickname: String = "",
+    val curatorDescription: String = "",
+    val profileImageUrl: String = "",
+    val courses: List<CourseUiState> = emptyList()
 )
+
+data class CourseUiState(
+    val courseId: Int = -1,
+    val courseTitle: String = "",
+    val isBookmarked: Boolean = false,
+    val description: String = "",
+    val imageUrls: List<String> = emptyList(),
+    val recordDate: String = ""
+)
+
 @HiltViewModel
 class RecommendCourseViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val recommendCourseService: RecommendCourseService
 ): ViewModel() {
 
+    val userId = savedStateHandle.toRoute<RecommendCourse>()
 
-
-    private val _state = MutableStateFlow(RecommendCourse())
-    val state: StateFlow<RecommendCourse>
+    private val _state = MutableStateFlow(RecommendCourseUiState())
+    val state: StateFlow<RecommendCourseUiState>
         get() = _state.asStateFlow()
 
-    fun getRecommendCourse() {
+    init {
+        getRecommendCourse(userId = userId.userId)
+    }
 
+    fun getRecommendCourse(userId: Int) {
         viewModelScope.launch {
             runCatching {
-                recommendCourseService.getRecommendCourse()
+                recommendCourseService.getRecommendCourse(userId)
             }.onSuccess { response ->
-                val testList = response.data!!.courseList!!.map{
-
-                }
-                _state.update { recommendCourse ->
-                    recommendCourse.copy(
-                        nickname = it.data!!.nickname,
-                        curatorDescription = it.data!!.description,
-                        courseId = it.data!!.courseList.get(it.data.courseList.size),
-                        courseTitle = it.data!!.courseList,
-                        isBookmarked = it.data!!.courseList,
-                        courseDescription = it.data!!.courseList,
-                        imageUrls = it.data!!.courseList,
-                        recordDate = it.data!!.courseList
-
-                    )
+                response.data?.let { data ->
+                    _state.update { 
+                        it.copy(
+                            curatorNickname = data.nickname,
+                            curatorDescription = data.description,
+                            profileImageUrl = data.profileImageUrl,
+                            courses = data.courseList.map { course ->
+                                CourseUiState(
+                                    courseId = course.courseId,
+                                    courseTitle = course.courseTitle,
+                                    isBookmarked = course.isBookmarked,
+                                    description = course.description,
+                                    imageUrls = course.imageUrls,
+                                    recordDate = course.recordDate
+                                )
+                            }
+                        )
+                    }
                 }
             }.onFailure {
-                _state.update { recommendCourse->
-                    recommendCourse.copy(
-                        nickname = "네트워크 통신 실패"
+                _state.update { 
+                    it.copy(
+                        curatorNickname = "네트워크 통신 실패"
                     )
-
                 }
             }
         }
     }
-
-
 }
