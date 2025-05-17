@@ -1,6 +1,6 @@
 package com.example.android4.presentation.detailcourse.model
 
-data class DetailCourse(
+data class DetailCourseModel(
     val name: String,
     val address: String,
     val description: String,

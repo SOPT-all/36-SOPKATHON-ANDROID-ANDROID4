@@ -1,11 +1,13 @@
 package com.example.android4.presentation.detailcourse
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.android4.data.dto.request.CourseLikeRequestDto
 import com.example.android4.data.service.CuratorService
-import com.example.android4.presentation.detailcourse.model.DetailCourse
 import com.example.android4.presentation.detailcourse.model.DetailCourseCardUiState
+import com.example.android4.presentation.detailcourse.model.DetailCourseModel
 import com.example.android4.presentation.detailcourse.model.DetailCourseUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -18,12 +20,15 @@ import java.time.format.DateTimeFormatter
 
 @HiltViewModel
 class DetailCourseViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val curatorService: CuratorService
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DetailCourseUiState())
     val uiState: StateFlow<DetailCourseUiState> = _uiState.asStateFlow()
 
-    val courseId = 1L //TODO: 이전 화면에서 넘겨온 courseId 세팅
+    val course = savedStateHandle.toRoute<DetailCourse>()
+
+    val courseId = course.courseId.toLong() //TODO: 이전 화면에서 넘겨온 courseId 세팅
 
     init {
         getDetailCourse()
@@ -46,7 +51,7 @@ class DetailCourseViewModel @Inject constructor(
                     date = LocalDateTime.now().basicDateFormatter(),
                     isLike = false,
                     courseList = result.spotList.map {
-                        DetailCourse(
+                        DetailCourseModel(
                             name = it.spotName,
                             address = it.address,
                             description = it.description,
