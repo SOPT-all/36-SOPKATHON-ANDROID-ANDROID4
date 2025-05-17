@@ -1,5 +1,6 @@
 package com.example.android4.presentation.recommendcourse
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +12,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun RecommendCourseScreen(
     paddingValues: PaddingValues,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -19,7 +21,10 @@ fun RecommendCourseScreen(
             .padding(paddingValues)
     ) {
         Text(
-            text = "추천 코스"
+            text = "추천 코스",
+            modifier = Modifier.clickable(
+                onClick = onClick
+            )
         )
     }
 }

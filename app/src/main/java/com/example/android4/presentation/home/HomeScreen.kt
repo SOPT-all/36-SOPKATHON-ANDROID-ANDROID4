@@ -1,5 +1,6 @@
 package com.example.android4.presentation.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun HomeScreen(
     paddingValues: PaddingValues,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -19,7 +21,9 @@ fun HomeScreen(
             .padding(paddingValues)
     ) {
         Text(
-            text = "홈"
+            text = "홈",
+            modifier = Modifier
+                .clickable(onClick = onClick)
         )
     }
 }

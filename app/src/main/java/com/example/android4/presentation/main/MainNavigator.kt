@@ -9,9 +9,11 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.example.android4.presentation.detailcourse.navigateToDetailCourse
 import com.example.android4.presentation.home.navigateToHome
 import com.example.android4.presentation.landing.Landing
 import com.example.android4.presentation.mypage.navigateToMyPage
+import com.example.android4.presentation.recommendcourse.navigateToRecommendCourse
 
 const val NAVIGATION_ROOT = 0
 
@@ -56,6 +58,18 @@ class MainNavigator(
         navOptions: NavOptions? = null
     ) {
         navController.navigateToHome(navOptions)
+    }
+
+    fun navigateToRecommendCourse(
+        navOptions: NavOptions? = null
+    ) {
+        navController.navigateToRecommendCourse(navOptions)
+    }
+
+    fun navigateToDetailCourse(
+        navOptions: NavOptions? = null
+    ) {
+        navController.navigateToDetailCourse(navOptions)
     }
 
     fun navigateUp() {

@@ -15,11 +15,13 @@ fun NavController.navigateToHome(
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navigateToRecommendCourse: () -> Unit
 ) {
     composable<Home> {
         HomeScreen(
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            onClick = navigateToRecommendCourse
         )
     }
 }

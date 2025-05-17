@@ -95,24 +95,22 @@ fun MainScreen(
                 navController = navigator.navController,
                 startDestination = navigator.startDestination
             ) {
-                detailCourseNavGraph(
-                    paddingValues = paddingValues
-                )
-
-                homeNavGraph(
-                    paddingValues = paddingValues
-                )
-
                 landingNavGraph(
                     paddingValues = paddingValues,
                     navigateToHome = navigator::navigateToHome
                 )
-
-                myPageNavGraph(
+                homeNavGraph(
+                    paddingValues = paddingValues,
+                    navigateToRecommendCourse = navigator::navigateToRecommendCourse
+                )
+                recommendCourseNavGraph(
+                    paddingValues = paddingValues,
+                    navigateToDetailCourse = navigator::navigateToDetailCourse
+                )
+                detailCourseNavGraph(
                     paddingValues = paddingValues
                 )
-
-                recommendCourseNavGraph(
+                myPageNavGraph(
                     paddingValues = paddingValues
                 )
             }
