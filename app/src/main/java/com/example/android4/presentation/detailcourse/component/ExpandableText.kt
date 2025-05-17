@@ -48,28 +48,37 @@ fun ExpandableText(
         color = SeeMoreAndLessColor
     )
     // 내용을 초기에 설정한 text 생성
-    var textWithMoreLess by remember { mutableStateOf(buildAnnotatedString {
-        withStyle(style = expendableTextStyle) {
-            append(text)
-        }
-    }) }
+    var textWithMoreLess by remember {
+        mutableStateOf(
+            buildAnnotatedString {
+                withStyle(style = expendableTextStyle) {
+                    append(text)
+                }
+            }
+        )
+    }
 
     LaunchedEffect(textLayoutResult) {
         textLayoutResult?.let {
             when {
                 // 텍스트 확장 상태
                 isExpanded -> {
-                    textWithMoreLess = originString(text, expendableTextStyle, seeMoreAndLessTextStyle)
+                    textWithMoreLess = originString(
+                        text,
+                        expendableTextStyle,
+                        seeMoreAndLessTextStyle
+                    )
                 }
 
                 // 텍스트가 펼쳐지지 않은 상태이고 최대 줄 수를 초과하는 경우
                 !isExpanded && it.hasVisualOverflow -> {
-                    val lastCharIndex = it.getLineEnd(minCollapsedLines-1)
+                    val lastCharIndex = it.getLineEnd(minCollapsedLines - 1)
                     textWithMoreLess = summarizedString(
                         text = text,
                         lastCharIndex = lastCharIndex,
                         expandableTextStyle = expendableTextStyle,
-                        seeMoreAndLessTextStyle = seeMoreAndLessTextStyle )
+                        seeMoreAndLessTextStyle = seeMoreAndLessTextStyle
+                    )
                     isClickable = true
                 }
             }
@@ -79,9 +88,8 @@ fun ExpandableText(
     // UriHandler parse and opens URI inside AnnotatedString Item in Browse
     val uriHandler = LocalUriHandler.current
 
-    //Composable container
-    Box(modifier = modifier)
-    {
+    // Composable container
+    Box(modifier = modifier) {
         SelectionContainer {
             ClickableText(
                 text = textWithMoreLess,
@@ -117,7 +125,7 @@ fun ExpandableText(
 fun originString(
     text: String,
     expandableTextStyle: SpanStyle,
-    seeMoreAndLessTextStyle: SpanStyle,
+    seeMoreAndLessTextStyle: SpanStyle
 ): AnnotatedString {
     return buildAnnotatedString {
         // 내용 추가
@@ -137,14 +145,16 @@ fun summarizedString(
     lastCharIndex: Int,
     showMoreString: String = "... 더보기",
     expandableTextStyle: SpanStyle,
-    seeMoreAndLessTextStyle: SpanStyle,
+    seeMoreAndLessTextStyle: SpanStyle
 ): AnnotatedString {
     return buildAnnotatedString {
         withStyle(style = expandableTextStyle) {
             // 내용 추가
-            append(text.substring(0, if(lastCharIndex > text.length) text.length else lastCharIndex)
-                .dropLast(showMoreString.length + 1)  // ... more 추가를 위에 문장 자르기
-                .dropLastWhile { it == ' ' || it == '.' }) // 주의: 조정한 글자가 오버플로우되면 무한 루프 발생
+            append(
+                text.substring(0, if (lastCharIndex > text.length) text.length else lastCharIndex)
+                    .dropLast(showMoreString.length + 1) // ... more 추가를 위에 문장 자르기
+                    .dropLastWhile { it == ' ' || it == '.' }
+            ) // 주의: 조정한 글자가 오버플로우되면 무한 루프 발생
         }
         append("... ")
         pushStringAnnotation(tag = "show_more_tag", annotation = "")

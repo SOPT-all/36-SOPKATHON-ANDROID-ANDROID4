@@ -40,7 +40,7 @@ fun RecommendCourse(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "코스 ${index+1}",
+                    text = "코스 ${index + 1}",
                     style = OnnaTheme.typography.title3b15,
                     color = OnnaTheme.colors.blue
                 )
@@ -48,7 +48,7 @@ fun RecommendCourse(
                 Text(
                     text = detailCourse.name,
                     style = OnnaTheme.typography.title1b17,
-                    color = OnnaTheme.colors.black,
+                    color = OnnaTheme.colors.black
                 )
             }
             Text(

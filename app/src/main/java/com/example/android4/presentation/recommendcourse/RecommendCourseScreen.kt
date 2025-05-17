@@ -1,8 +1,6 @@
 package com.example.android4.presentation.recommendcourse
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,15 +13,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import com.example.android4.R
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.android4.R
 import com.example.android4.core.designsystem.theme.OnnaTheme
 import com.example.android4.presentation.recommendcourse.component.CourseCard
 import com.example.android4.presentation.recommendcourse.component.UserCard
@@ -34,8 +29,6 @@ fun RecommendCourseScreen(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -49,58 +42,44 @@ fun RecommendCourseScreen(
         }
 
         item {
-
             UserCard(
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
                 curatorName = "김뚝딱",
-                curatorInfo = "큐레이터에 대한 설명 \n경남 지역에서 25년째 살고있는 어쩌구")
-
+                curatorInfo = "큐레이터에 대한 설명 \n경남 지역에서 25년째 살고있는 어쩌구"
+            )
         }
 
         item {
-
             CourseCard(
                 courseDetail = "코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명",
                 postDay = "2025.01.23",
                 onItemClick = onClick
-                )
+            )
 
             CourseCard(
                 courseDetail = "안녕",
                 postDay = "2025.01.23",
                 onItemClick = onClick
-                )
+            )
 
             CourseCard(
                 courseDetail = "안ㅇㄹ",
                 postDay = "2025.01.23",
-                onItemClick = onClick)
-
+                onItemClick = onClick
+            )
         }
-
-
-
-
-
-
-
-
-
-
     }
 }
 
 @Composable
 private fun CourseTopBar(modifier: Modifier) {
-
     Row(
         modifier = modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
 
     ) {
-
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_delete_24),
             contentDescription = null,
@@ -109,9 +88,8 @@ private fun CourseTopBar(modifier: Modifier) {
                 .size(24.dp)
         )
 
-
         Text(
-            //text = "{$curatorName}이 추천하는 코스"
+            // text = "{$curatorName}이 추천하는 코스"
             text = "김뚝딱이 추천하는 코스",
             style = OnnaTheme.typography.title1b17,
             color = OnnaTheme.colors.black
@@ -119,5 +97,4 @@ private fun CourseTopBar(modifier: Modifier) {
 
         Spacer(Modifier.width(24.dp))
     }
-
 }
