@@ -3,6 +3,8 @@ package com.example.android4.presentation.mypage
 import android.R.style
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +29,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -74,32 +78,14 @@ import com.example.android4.data.model.UserProfile
 // }
 
 @Composable
-fun MyPageScreen(paddingValues: PaddingValues) {
+fun MyPageScreen(paddingValues: PaddingValues, viewModel: MyPageViewModel = hiltViewModel()) {
 
-    val userProfile = UserProfile(
-        name = "홍길동",
-        imageUrl = "https://avatars.githubusercontent.com/u/160750136?v=4"
-    )
+    val userProfile by viewModel.userProfile.collectAsState()
+    val courses by viewModel.courses.collectAsState()
 
-    val courses = listOf(
-        Course(
-            title = "가을 단풍길 산책",
-            description = "단풍이 아름다운 코스입니다.",
-            imageUrls = listOf(
-                "https://avatars.githubusercontent.com/u/160750136?v=4",
-                "https://avatars.githubusercontent.com/u/160750136?v=4"
-            )
-        ),
-        Course(
-            title = "봄 벚꽃길",
-            description = "벚꽃이 흐드러진 봄날 산책 코스입니다.",
-            imageUrls = listOf(
-                "https://avatars.githubusercontent.com/u/160750136?v=4",
-                "https://avatars.githubusercontent.com/u/160750136?v=4"
-            )
-        )
-    )
-
+    LaunchedEffect(Unit) {
+        viewModel.fetchMyPage(userId = 531)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -144,7 +130,7 @@ fun Profile(userProfile: UserProfile) {
             .background(color = BaseLine, shape = RoundedCornerShape(12.dp)),
     ) {
         UrlImage(
-            imageUrl = "https://avatars.githubusercontent.com/u/160750136?v=4",
+            imageUrl = userProfile.imageUrl,
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
