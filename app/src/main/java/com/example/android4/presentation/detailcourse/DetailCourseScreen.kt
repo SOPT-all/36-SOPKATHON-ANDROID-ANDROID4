@@ -29,6 +29,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.android4.R
 import com.example.android4.core.designsystem.theme.Blue
 import com.example.android4.core.designsystem.theme.OnnaTheme
@@ -43,7 +44,7 @@ fun DetailCourseScreen(
     viewModel: DetailCourseViewModel = hiltViewModel()
 ) {
     val systemUiController = rememberSystemUiController()
-    val course = viewModel.detailCourseDummy
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         systemUiController.setStatusBarColor(
@@ -78,13 +79,17 @@ fun DetailCourseScreen(
                         .padding(vertical = 10.dp)
                 ) {
                     Text(
-                        text = course.courseName,
+                        text = uiState.value.data.courseName,
                         style = OnnaTheme.typography.title4b22,
-                        color = OnnaTheme.colors.white
+                        color = OnnaTheme.colors.white,
+                        modifier = Modifier.weight(1f)
                     )
                     Spacer(Modifier.width(10.dp))
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_bookmark_24),
+                        imageVector = ImageVector.vectorResource(
+                            if (uiState.value.data.isLike) R.drawable.ic_bookmark_fill_24
+                            else R.drawable.ic_bookmark_24
+                        ),
                         contentDescription = null,
                         tint = OnnaTheme.colors.white,
                         modifier = Modifier
@@ -96,13 +101,13 @@ fun DetailCourseScreen(
                 }
                 Spacer(Modifier.height(18.dp))
                 Text(
-                    text = course.courseDescription,
+                    text = uiState.value.data.courseDescription,
                     style = OnnaTheme.typography.body2m15,
                     color = OnnaTheme.colors.white
                 )
                 Spacer(Modifier.height(18.dp))
                 Text(
-                    text = course.date,
+                    text = uiState.value.data.date,
                     style = OnnaTheme.typography.body7r13,
                     color = OnnaTheme.colors.white
                 )
@@ -112,7 +117,7 @@ fun DetailCourseScreen(
             contentPadding = PaddingValues(top = 30.dp, bottom = 20.dp),
             verticalArrangement = Arrangement.spacedBy(40.dp)
         ) {
-            itemsIndexed(course.courseList) { index, data ->
+            itemsIndexed(uiState.value.data.courseList) { index, data ->
                 RecommendCourse(index, data)
             }
         }
