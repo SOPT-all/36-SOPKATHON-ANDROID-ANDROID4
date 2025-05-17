@@ -2,6 +2,7 @@ package com.example.android4.presentation.detailcourse
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android4.data.dto.request.CourseLikeRequestDto
 import com.example.android4.data.service.CuratorService
 import com.example.android4.presentation.detailcourse.model.DetailCourse
 import com.example.android4.presentation.detailcourse.model.DetailCourseCardUiState
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -21,6 +23,8 @@ class DetailCourseViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(DetailCourseUiState())
     val uiState: StateFlow<DetailCourseUiState> = _uiState.asStateFlow()
+
+    val courseId = 1L //TODO: 이전 화면에서 넘겨온 courseId 세팅
 
     init {
         getDetailCourse()
@@ -32,7 +36,7 @@ class DetailCourseViewModel @Inject constructor(
 
             runCatching {
                 curatorService.getCourseDetail(
-                    courseId = 1 //TODO: 이전 화면에서 넘겨온 courseId 세팅
+                    courseId = courseId
                 )
             }.onSuccess { response ->
                 val result = response.data
@@ -60,7 +64,25 @@ class DetailCourseViewModel @Inject constructor(
     }
 
     fun toggleBookmark() {
-        // TODO: 저장 여부 변경
+        val isLike = _uiState.value.data.isLike
+        if (!isLike) {
+            viewModelScope.launch {
+                runCatching {
+                    curatorService.postCourseLike(
+                        CourseLikeRequestDto(courseId = courseId)
+                    )
+                }.onSuccess {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        data = _uiState.value.data.copy(
+                            isLike = !isLike
+                        )
+                    )
+                }.onFailure {
+                    Timber.d("exception: $it")
+                }
+            }
+        }
     }
 }
 

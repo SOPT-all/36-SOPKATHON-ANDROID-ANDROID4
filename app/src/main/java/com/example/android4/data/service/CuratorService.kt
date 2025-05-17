@@ -1,9 +1,12 @@
 package com.example.android4.data.service
 
 import com.example.android4.core.network.BaseResponse
+import com.example.android4.data.dto.request.CourseLikeRequestDto
 import com.example.android4.data.dto.response.CourseDetailResponseDto
 import com.example.android4.data.dto.response.CuratorListResponseDto
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface CuratorService {
@@ -14,4 +17,9 @@ interface CuratorService {
     suspend fun getCourseDetail(
         @Path("courseId") courseId: Long
     ): BaseResponse<CourseDetailResponseDto>
+
+    @POST("/api/bookmarks")
+    suspend fun postCourseLike(
+        @Body request: CourseLikeRequestDto
+    ): BaseResponse<CourseLikeRequestDto>
 }
