@@ -8,3 +8,6 @@ interface DummyService {
     @GET("/api/v1/users/me")
     suspend fun getUserName(): BaseResponse<DummyResponseDto>
 }
+
+
+
