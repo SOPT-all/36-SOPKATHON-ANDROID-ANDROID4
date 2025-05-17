@@ -85,7 +85,10 @@ fun DetailCourseScreen(
                     )
                     Spacer(Modifier.width(10.dp))
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_bookmark_24),
+                        imageVector = ImageVector.vectorResource(
+                            if (uiState.value.data.isLike) R.drawable.ic_bookmark_fill_24
+                            else R.drawable.ic_bookmark_24
+                        ),
                         contentDescription = null,
                         tint = OnnaTheme.colors.white,
                         modifier = Modifier
