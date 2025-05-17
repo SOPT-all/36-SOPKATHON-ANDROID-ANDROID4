@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.android4.core.designsystem.theme.ANDROID4Theme
+import com.example.android4.presentation.main.MainScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
@@ -18,11 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OnnaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DummyRoute(
-                        paddingValues = innerPadding
-                    )
-                }
+                MainScreen()
             }
         }
     }
