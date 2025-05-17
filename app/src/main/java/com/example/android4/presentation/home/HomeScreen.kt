@@ -48,13 +48,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     paddingValues: PaddingValues,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val cardList by viewModel.cardList.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val pagerState = rememberPagerState(initialPage = 0) { cardList.size }
+    val pagerState = rememberPagerState(initialPage = 0) { uiState.cardList.size }
     val coroutineScope = rememberCoroutineScope()
     val screenWidth = with(LocalDensity.current) {
         LocalWindowInfo.current.containerSize.width.toDp()
@@ -80,83 +80,86 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(23.dp))
 
-        HorizontalPager(
-            state = pagerState,
-            contentPadding = PaddingValues(horizontal = screenWidth * 0.15f),
-            modifier = Modifier.fillMaxWidth()
-        ) { page ->
-            HomeCard(
-                imageUrl = cardList[page].imageUrl,
-                userName = cardList[page].userName,
-                userDescription = cardList[page].userDescription,
-                onButtonClick = onClick,
-                modifier = Modifier
-                    .graphicsLayer {
-                        val pageOffset = (
-                            (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
-                            ).absoluteValue
+        if (uiState.cardList.isNotEmpty()) {
+            HorizontalPager(
+                state = pagerState,
+                contentPadding = PaddingValues(horizontal = screenWidth * 0.15f),
+                modifier = Modifier.fillMaxWidth()
+            ) { page ->
+                val card = uiState.cardList[page]
+                HomeCard(
+                    imageUrl = card.imageUrl,
+                    userName = card.userName,
+                    userDescription = card.userDescription,
+                    onButtonClick = { onClick(card.id) },
+                    modifier = Modifier
+                        .graphicsLayer {
+                            val pageOffset = (
+                                (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+                                ).absoluteValue
 
-                        val scale = 0.9f + 0.1f * (1f - pageOffset.coerceIn(0f, 1f))
-                        scaleX = scale
-                        scaleY = scale
+                            val scale = 0.9f + 0.1f * (1f - pageOffset.coerceIn(0f, 1f))
+                            scaleX = scale
+                            scaleY = scale
 
-                        alpha = 0.4f + 0.6f * (1f - pageOffset.coerceIn(0f, 1f))
-                    }
-                    .padding(8.dp)
-                    .dropShadow(
-                        shape = RoundedCornerShape(16.dp),
-                        offsetY = 4.dp,
-                        blur = 10.dp,
-                        color = OnnaTheme.colors.black.copy(alpha = 0.1f)
-                    )
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 51.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_left_white_24),
-                contentDescription = null,
-                tint = OnnaTheme.colors.blue,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(OnnaTheme.colors.lightBlue)
-                    .clickable(onClick = {
-                        if (pagerState.currentPage > 0) {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                                viewModel.updateCurrentPage(pagerState.currentPage - 1)
-                            }
+                            alpha = 0.4f + 0.6f * (1f - pageOffset.coerceIn(0f, 1f))
                         }
-                    })
-                    .padding(14.dp)
-            )
+                        .padding(8.dp)
+                        .dropShadow(
+                            shape = RoundedCornerShape(16.dp),
+                            offsetY = 4.dp,
+                            blur = 10.dp,
+                            color = OnnaTheme.colors.black.copy(alpha = 0.1f)
+                        )
+                )
+            }
 
-            Spacer(modifier = Modifier.width(40.dp))
-
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_left_white_24),
-                contentDescription = null,
-                tint = OnnaTheme.colors.blue,
+            Row(
                 modifier = Modifier
-                    .rotate(180f)
-                    .clip(CircleShape)
-                    .background(OnnaTheme.colors.lightBlue)
-                    .clickable(onClick = {
-                        if (pagerState.currentPage < cardList.size - 1) {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                                viewModel.updateCurrentPage(pagerState.currentPage + 1)
+                    .fillMaxWidth()
+                    .padding(top = 51.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_left_white_24),
+                    contentDescription = null,
+                    tint = OnnaTheme.colors.blue,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(OnnaTheme.colors.lightBlue)
+                        .clickable(onClick = {
+                            if (pagerState.currentPage > 0) {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                                    viewModel.updateCurrentPage(pagerState.currentPage - 1)
+                                }
                             }
-                        }
-                    })
-                    .padding(14.dp)
-            )
+                        })
+                        .padding(14.dp)
+                )
+
+                Spacer(modifier = Modifier.width(40.dp))
+
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_left_white_24),
+                    contentDescription = null,
+                    tint = OnnaTheme.colors.blue,
+                    modifier = Modifier
+                        .rotate(180f)
+                        .clip(CircleShape)
+                        .background(OnnaTheme.colors.lightBlue)
+                        .clickable(onClick = {
+                            if (pagerState.currentPage < uiState.cardList.size - 1) {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                    viewModel.updateCurrentPage(pagerState.currentPage + 1)
+                                }
+                            }
+                        })
+                        .padding(14.dp)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(46.dp))

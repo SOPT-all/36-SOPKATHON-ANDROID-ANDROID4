@@ -9,9 +9,10 @@ import com.example.android4.core.navigation.Route
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToRecommendCourse(
+    userId: Int,
     navOptions: NavOptions? = null
 ) {
-    navigate(RecommendCourse, navOptions)
+    navigate(RecommendCourse(userId), navOptions)
 }
 
 fun NavGraphBuilder.recommendCourseNavGraph(
@@ -27,4 +28,6 @@ fun NavGraphBuilder.recommendCourseNavGraph(
 }
 
 @Serializable
-data object RecommendCourse : Route
+data class RecommendCourse(
+    val userId: Int
+) : Route
