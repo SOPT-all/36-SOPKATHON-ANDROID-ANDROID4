@@ -4,11 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
 import com.example.android4.core.designsystem.theme.ANDROID4Theme
-import com.example.android4.presentation.dummy.DummyRoute
+import com.example.android4.presentation.main.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,11 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ANDROID4Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DummyRoute(
-                        paddingValues = innerPadding
-                    )
-                }
+                MainScreen()
             }
         }
     }
