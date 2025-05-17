@@ -79,7 +79,7 @@ class MainNavigator(
         userId: Int,
         navOptions: NavOptions? = null
     ) {
-        navController.navigateToRecommendCourse(navOptions=navOptions, userId =  userId)
+        navController.navigateToRecommendCourse(navOptions = navOptions, userId = userId)
     }
 
     fun navigateToDetailCourse(

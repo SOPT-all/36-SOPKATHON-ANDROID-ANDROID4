@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
     private fun getCuratorList() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            
+
             runCatching {
                 curatorService.getCuratorList()
             }.onSuccess { response ->
@@ -53,7 +53,7 @@ class HomeViewModel @Inject constructor(
                         userDescription = curator.description
                     )
                 } ?: emptyList()
-                
+
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     cardList = curatorList

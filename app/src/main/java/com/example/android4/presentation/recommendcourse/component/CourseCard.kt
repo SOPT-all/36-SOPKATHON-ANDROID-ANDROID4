@@ -1,6 +1,5 @@
 package com.example.android4.presentation.recommendcourse.component
 
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,15 +26,13 @@ import com.example.android4.R
 import com.example.android4.core.designsystem.component.UrlImage
 import com.example.android4.core.designsystem.theme.OnnaTheme
 
-
 @Composable
 fun CourseCard(
     modifier: Modifier = Modifier,
-    courseDetail : String,
+    courseDetail: String,
     onItemClick: () -> Unit,
     postDay: String
 ) {
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -44,7 +41,6 @@ fun CourseCard(
                 onClick = onItemClick
             )
     ) {
-
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -61,7 +57,6 @@ fun CourseCard(
                 contentDescription = null,
                 tint = OnnaTheme.colors.gray5
             )
-
         }
 
         Spacer(modifier = modifier.height(10.dp))
@@ -73,7 +68,6 @@ fun CourseCard(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
 
-
         )
 
         Spacer(modifier = modifier.height(17.dp))
@@ -83,6 +77,15 @@ fun CourseCard(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            UrlImage(
+                imageUrl = "https://avatars.githubusercontent.com/u/142514626?v=4",
+                contentScale = ContentScale.Crop,
+                shape = RectangleShape,
+                modifier = modifier
+                    .weight(1f)
+                    .aspectRatio(151 / 113f)
+
+            )
 
             UrlImage(
                 imageUrl = "https://avatars.githubusercontent.com/u/142514626?v=4",
@@ -92,26 +95,8 @@ fun CourseCard(
                     .weight(1f)
                     .aspectRatio(151 / 113f)
 
-
             )
-
-
-
-
-            UrlImage(
-                imageUrl = "https://avatars.githubusercontent.com/u/142514626?v=4",
-                contentScale = ContentScale.Crop,
-                shape = RectangleShape,
-                modifier = modifier
-                    .weight(1f)
-                    .aspectRatio(151/ 113f)
-
-
-            )
-
-
         }
-
 
         Spacer(modifier = modifier.height(10.dp))
 
@@ -127,15 +112,8 @@ fun CourseCard(
             thickness = 1.dp,
             color = OnnaTheme.colors.gray1
         )
-
     }
-
-
-
 }
-
-
-
 
 @Preview(showBackground = true)
 @Composable
@@ -146,5 +124,5 @@ private fun CourseCardPreview() {
         courseDetail = "코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명 코스에 대한 상세 설명코스에 대한 상세 설명코스에 대한 상세 설명",
         postDay = "2026.01.02",
         onItemClick = {}
-        )
+    )
 }

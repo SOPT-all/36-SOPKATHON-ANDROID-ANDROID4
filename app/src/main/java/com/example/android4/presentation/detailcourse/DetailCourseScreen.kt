@@ -65,7 +65,7 @@ fun DetailCourseScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 37.dp)
-                ) {
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -80,7 +80,7 @@ fun DetailCourseScreen(
                     Text(
                         text = course.courseName,
                         style = OnnaTheme.typography.title4b22,
-                        color = OnnaTheme.colors.white,
+                        color = OnnaTheme.colors.white
                     )
                     Spacer(Modifier.width(10.dp))
                     Icon(
@@ -98,13 +98,13 @@ fun DetailCourseScreen(
                 Text(
                     text = course.courseDescription,
                     style = OnnaTheme.typography.body2m15,
-                    color = OnnaTheme.colors.white,
+                    color = OnnaTheme.colors.white
                 )
                 Spacer(Modifier.height(18.dp))
                 Text(
                     text = course.date,
                     style = OnnaTheme.typography.body7r13,
-                    color = OnnaTheme.colors.white,
+                    color = OnnaTheme.colors.white
                 )
             }
         }
@@ -127,5 +127,4 @@ private fun DetailCourseScreenPreview() {
             paddingValues = PaddingValues()
         )
     }
-
 }

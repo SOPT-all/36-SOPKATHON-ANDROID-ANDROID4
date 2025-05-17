@@ -7,8 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 
 @HiltViewModel
-class DetailCourseViewModel @Inject constructor(): ViewModel() {
-    //TODO: MutableStateFlow로 변경
+class DetailCourseViewModel @Inject constructor() : ViewModel() {
+    // TODO: MutableStateFlow로 변경
     val detailCourseDummy = DetailCourseState(
         isLike = false,
         courseName = "연휴 마지막 날\n들리기 좋은 통영 여행코스",
@@ -41,11 +41,11 @@ class DetailCourseViewModel @Inject constructor(): ViewModel() {
                     "https://avatars.githubusercontent.com/u/101113025?v=4",
                     "https://avatars.githubusercontent.com/u/101113025?v=4"
                 )
-            ),
+            )
         )
     )
 
     fun toggleBookmark() {
-        //TODO: 저장 여부 변경
+        // TODO: 저장 여부 변경
     }
 }

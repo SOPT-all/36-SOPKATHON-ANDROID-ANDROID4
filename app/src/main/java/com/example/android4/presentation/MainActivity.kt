@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.core.view.WindowCompat
 import com.example.android4.core.designsystem.theme.OnnaTheme
 import com.example.android4.presentation.main.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
