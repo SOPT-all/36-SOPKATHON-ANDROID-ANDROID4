@@ -1,6 +1,5 @@
 package com.example.android4.presentation.landing
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -15,12 +14,10 @@ fun NavController.navigateToLanding(
 }
 
 fun NavGraphBuilder.landingNavGraph(
-    paddingValues: PaddingValues,
     navigateToHome: () -> Unit
 ) {
     composable<Landing> {
         LandingScreen(
-            paddingValues = paddingValues,
             onClick = navigateToHome
         )
     }

@@ -14,14 +14,14 @@ enum class MainTab(
     val route: MainTabRoute
 ) {
     HOME(
-        selectedIconResource = R.drawable.ic_launcher_foreground,
-        unselectedIconResource = R.drawable.ic_launcher_foreground,
+        selectedIconResource = R.drawable.icon_map_mono_24,
+        unselectedIconResource = R.drawable.icon_map_mono_grey3_24,
         label = "큐레이션",
         route = Home
     ),
     MYPAGE(
-        selectedIconResource = R.drawable.ic_launcher_foreground,
-        unselectedIconResource = R.drawable.ic_launcher_foreground,
+        selectedIconResource = R.drawable.icon_user_mono_24,
+        unselectedIconResource = R.drawable.icon_user_mono_grey3_24,
         label = "마이페이지",
         route = MyPage
     );

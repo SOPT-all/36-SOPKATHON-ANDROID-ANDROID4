@@ -16,7 +16,7 @@ fun NavController.navigateToHome(
 
 fun NavGraphBuilder.homeNavGraph(
     paddingValues: PaddingValues,
-    navigateToRecommendCourse: () -> Unit
+    navigateToRecommendCourse: (Int) -> Unit
 ) {
     composable<Home> {
         HomeScreen(

@@ -22,6 +22,7 @@ data class OnnaTypography(
     val title1b17: TextStyle,
     val title2sb15: TextStyle,
     val title3b15: TextStyle,
+    val title4b22: TextStyle,
     val title5b18: TextStyle,
     // body
     val body1sb15: TextStyle,
@@ -31,6 +32,7 @@ data class OnnaTypography(
     val body5sb13: TextStyle,
     val body6m13: TextStyle,
     val body7r13: TextStyle,
+    val body8r16: TextStyle,
     // label
     val label1b11: TextStyle,
     val label2m11: TextStyle,
@@ -57,64 +59,72 @@ private fun OnnaTextStyle(
 val defaultOnnaTypography = OnnaTypography(
     title1b17 = OnnaTextStyle(
         fontFamily = onnaBold,
-        fontSize = 17.sp,
+        fontSize = 17.sp
     ),
     title2sb15 = OnnaTextStyle(
         fontFamily = onnaSemiBold,
-        fontSize = 17.sp,
+        fontSize = 17.sp
     ),
     title3b15 = OnnaTextStyle(
         fontFamily = onnaBold,
-        fontSize = 15.sp,
+        fontSize = 15.sp
+    ),
+    title4b22 = OnnaTextStyle(
+        fontFamily = onnaBold,
+        fontSize = 22.sp
     ),
     title5b18 = OnnaTextStyle(
         fontFamily = onnaBold,
-        fontSize = 18.sp,
+        fontSize = 18.sp
     ),
     body1sb15 = OnnaTextStyle(
         fontFamily = onnaSemiBold,
-        fontSize = 15.sp,
+        fontSize = 15.sp
     ),
     body2m15 = OnnaTextStyle(
         fontFamily = onnaMedium,
-        fontSize = 15.sp,
+        fontSize = 15.sp
     ),
     body3r15 = OnnaTextStyle(
         fontFamily = onnaRegular,
-        fontSize = 15.sp,
+        fontSize = 15.sp
     ),
     body4b13 = OnnaTextStyle(
         fontFamily = onnaBold,
-        fontSize = 13.sp,
+        fontSize = 13.sp
     ),
     body5sb13 = OnnaTextStyle(
         fontFamily = onnaSemiBold,
-        fontSize = 13.sp,
+        fontSize = 13.sp
     ),
     body6m13 = OnnaTextStyle(
         fontFamily = onnaMedium,
-        fontSize = 13.sp,
+        fontSize = 13.sp
     ),
     body7r13 = OnnaTextStyle(
         fontFamily = onnaRegular,
-        fontSize = 13.sp,
+        fontSize = 13.sp
+    ),
+    body8r16 = OnnaTextStyle(
+        fontFamily = onnaRegular,
+        fontSize = 16.sp
     ),
     label1b11 = OnnaTextStyle(
         fontFamily = onnaBold,
-        fontSize = 11.sp,
+        fontSize = 11.sp
     ),
     label2m11 = OnnaTextStyle(
         fontFamily = onnaMedium,
-        fontSize = 11.sp,
+        fontSize = 11.sp
     ),
     label3r11 = OnnaTextStyle(
         fontFamily = onnaRegular,
-        fontSize = 11.sp,
+        fontSize = 11.sp
     ),
     label4m9 = OnnaTextStyle(
         fontFamily = onnaMedium,
-        fontSize = 9.sp,
-    ),
+        fontSize = 9.sp
+    )
 )
 
 val LocalOnnaTypographyProvider = staticCompositionLocalOf { defaultOnnaTypography }

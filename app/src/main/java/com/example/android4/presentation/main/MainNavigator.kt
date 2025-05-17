@@ -11,9 +11,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.android4.presentation.detailcourse.navigateToDetailCourse
 import com.example.android4.presentation.home.navigateToHome
-import com.example.android4.presentation.landing.Landing
+import com.example.android4.presentation.landing.navigateToLanding
 import com.example.android4.presentation.mypage.navigateToMyPage
 import com.example.android4.presentation.recommendcourse.navigateToRecommendCourse
+import com.example.android4.presentation.splash.Splash
 
 const val NAVIGATION_ROOT = 0
 
@@ -24,7 +25,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = Landing
+    val startDestination = Splash
 
     val currentTab: MainTab?
         @Composable get() = MainTab.Companion.find { tab ->
@@ -60,10 +61,25 @@ class MainNavigator(
         navController.navigateToHome(navOptions)
     }
 
+    fun navigateToLanding() {
+        val navOptions = navOptions {
+            navController.currentDestination?.route?.let {
+                popUpTo(it) {
+                    inclusive = true
+                    saveState = true
+                }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+        navController.navigateToLanding(navOptions)
+    }
+
     fun navigateToRecommendCourse(
+        userId: Int,
         navOptions: NavOptions? = null
     ) {
-        navController.navigateToRecommendCourse(navOptions)
+        navController.navigateToRecommendCourse(navOptions = navOptions, userId = userId)
     }
 
     fun navigateToDetailCourse(
