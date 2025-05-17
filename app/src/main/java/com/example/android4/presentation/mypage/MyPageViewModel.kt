@@ -31,11 +31,10 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = service.getMyPage()
-                Log.d("MyPageViewModel", "response: $response")
+
 
                 response.data?.let { data ->
-                    Log.d("MyPageViewModel", "nickname: ${data.nickname}")
-                    Log.d("MyPageViewModel", "courses: ${data.courseList}")
+
 
                     _userProfile.value = UserProfile(
                         name = data.nickname,
@@ -50,8 +49,7 @@ class MyPageViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                Log.d("tag", e.toString())
-                // TODO: 에러 처리
+
             }
         }
     }
