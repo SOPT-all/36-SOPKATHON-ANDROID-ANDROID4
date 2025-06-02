@@ -1,10 +1,6 @@
 package com.example.android4.presentation.mypage
 
-import android.R.style
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,23 +14,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,8 +35,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.android4.core.designsystem.component.UrlImage
 import com.example.android4.core.designsystem.theme.BaseLine
 import com.example.android4.core.designsystem.theme.Black
-import com.example.android4.core.designsystem.theme.Gray1
-import com.example.android4.core.designsystem.theme.Gray2
 import com.example.android4.core.designsystem.theme.Gray6
 import com.example.android4.core.designsystem.theme.Gray7
 import com.example.android4.core.designsystem.theme.OnnaTheme
@@ -52,30 +42,6 @@ import com.example.android4.core.designsystem.theme.White
 import com.example.android4.data.model.Course
 import com.example.android4.data.model.UserProfile
 
-
-//@Composable
-//fun MyPageScreen(viewModel: MyPageViewModel = hiltViewModel()) {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .verticalScroll(rememberScrollState())
-//
-//    ) {
-//        MypageHeader()
-//        Profile(userProfile = viewModel.userProfile)
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(10.dp)
-//                .background(Gray1)
-//        ) {
-//        }
-//        MyCourse(courses = viewModel.courses)
-//    }
-//
-//
-// }
 
 @Composable
 fun MyPageScreen(paddingValues: PaddingValues, viewModel: MyPageViewModel = hiltViewModel()) {
@@ -89,6 +55,7 @@ fun MyPageScreen(paddingValues: PaddingValues, viewModel: MyPageViewModel = hilt
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(OnnaTheme.colors.white)
 
     ) {
         MypageHeader()

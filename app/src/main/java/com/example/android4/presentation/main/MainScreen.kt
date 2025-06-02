@@ -109,6 +109,7 @@ fun MainScreen(
                 )
                 recommendCourseNavGraph(
                     paddingValues = paddingValues,
+                    navigateBack = navigator::navigateUp,
                     navigateToDetailCourse = navigator::navigateToDetailCourse
                 )
                 detailCourseNavGraph(

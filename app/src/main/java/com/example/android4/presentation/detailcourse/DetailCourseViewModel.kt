@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @HiltViewModel
 class DetailCourseViewModel @Inject constructor(
@@ -28,7 +26,7 @@ class DetailCourseViewModel @Inject constructor(
 
     val course = savedStateHandle.toRoute<DetailCourse>()
 
-    val courseId = course.courseId.toLong() //TODO: 이전 화면에서 넘겨온 courseId 세팅
+    val courseId = course.courseId.toLong()
 
     init {
         getDetailCourse()
@@ -46,10 +44,9 @@ class DetailCourseViewModel @Inject constructor(
                 val result = response.data
                 val courseInfo = DetailCourseCardUiState(
                     courseName = result!!.courseTitle,
-                    courseDescription = "연휴를 마무리하기 좋은 통영의 감각적인 \n" +
-                            "공간들을 소개해 드릴게요!",
-                    date = LocalDateTime.now().basicDateFormatter(),
-                    isLike = false,
+                    courseDescription = course.courseDescription,
+                    date = course.recordDate,
+                    isLike = course.isBookmarked,
                     courseList = result.spotList.map {
                         DetailCourseModel(
                             name = it.spotName,
@@ -102,8 +99,3 @@ class DetailCourseViewModel @Inject constructor(
         }
     }
 }
-
-fun LocalDateTime.basicDateFormatter(): String {
-    return this.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-}
-
